@@ -3,348 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Emma's Chat & Video App</title>
-    <link rel="icon" href="https://helios-i.mashable.com/imagery/articles/046V6VhIsS7y5kAQzUbRY2m/hero-image.fill.size_1200x900.v1623390961.jpg" type="image/jpeg">
-    <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); margin: 0; padding: 0; min-height: 100vh; color: #333; display: flex; flex-direction: column; }
-        nav { background: rgba(255, 255, 255, 0.1); padding: 15px; backdrop-filter: blur(10px); text-align: center; }
-        nav button { background: rgba(255, 255, 255, 0.2); border: none; color: white; padding: 10px 20px; margin: 0 5px; border-radius: 30px; cursor: pointer; font-size: 16px; transition: 0.3s; }
-        nav button:hover { background: rgba(255, 255, 255, 0.4); }
-        .page { display: none; max-width: 800px; margin: 20px auto; padding: 30px; background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        #homePage { display: block; } /* Only Home visible on load */
-        h1, h2 { color: #764ba2; text-align: center; }
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 10px; box-sizing: border-box; }
-        button { background: #667eea; color: white; border: none; padding: 12px 25px; margin: 10px 5px; border-radius: 30px; cursor: pointer; font-size: 16px; transition: 0.3s; }
-        button:hover { background: #764ba2; transform: scale(1.05); }
-        video { width: 100%; max-width: 400px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); margin: 15px 0; }
-        .user-card { background: #f8f9fa; border-radius: 15px; padding: 15px; margin: 15px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 220px; }
-        .user-pic { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; }
-        .recommended-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
-        .banner { background: pink; color: white; padding: 15px; border-radius: 15px; margin: 20px 0; text-align: center; font-weight: bold; }
-        footer { background: rgba(0, 0, 0, 0.3); color: white; text-align: center; padding: 20px; font-size: 14px; backdrop-filter: blur(5px); margin-top: auto; }
-    </style>
-
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js"></script>
-    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+    <title>Emma Chat App</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
-    <nav>
-        <button onclick="showPage('homePage')">Home</button>
-        <button onclick="showPage('profilePage')">Profile</button>
-        <button onclick="showPage('registerPage')">Register</button>
-        <button onclick="showPage('loginPage')">Login</button>
-        <button onclick="showPage('chatPage')">Chat</button>
-        <button onclick="showPage('videoPage')">Video Call</button>
-        <button id="logoutButton" style="display:none;" onclick="logout()">Logout</button>
-    </nav>
+<nav>
+    <button onclick="loadPage('pages/home.html')">Home</button>
+    <button onclick="loadPage('pages/explore.html')">Explore</button>
+    <button onclick="loadPage('pages/chat.html')">Chat</button>
+    <button onclick="loadPage('pages/profile.html')">Profile</button>
+    <button onclick="loadPage('pages/login.html')">Login</button>
+    <button onclick="loadPage('pages/register.html')">Register</button>
+    <button id="logoutBtn" onclick="logout()" style="display:none;">Logout</button>
+</nav>
 
-    <!-- Home Page -->
-    <div id="homePage" class="page">
-        <h1>Welcome to Emma's App</h1>
-        <p>Register or login to connect with others.</p>
+<main id="content">
+    <h2>Welcome to Emma App</h2>
+    <p>Please login or continue as guest.</p>
+    <button onclick="loadPage('pages/login.html')">Login</button>
+    <button onclick="loadPage('pages/register.html')">Register</button>
+    <button onclick="guestMode()">Continue as Guest</button>
+</main>
 
-        <div id="loggedInHome" style="display:none;">
-            <div class="banner">Connect Now! Start Video Calls Instantly ❤️</div>
-            <h2>Recommended Users</h2>
-            <div id="recommendedGrid" class="recommended-grid"></div>
-        </div>
-    </div>
+<footer>
+    © 2026 Emma App
+</footer>
 
-    <!-- Profile Page -->
-    <div id="profilePage" class="page" style="display:none;">
-        <h2>Edit Profile</h2>
-        <img id="currentProfilePic" src="https://via.placeholder.com/100" alt="Profile Pic" class="user-pic" style="display:block; margin:20px auto;">
-        <input type="file" id="profilePicInput" accept="image/*"><br>
-        <input id="bioInput" type="text" placeholder="Bio">
-        <input id="ageInput" type="number" placeholder="Age">
-        <input id="locationInput" type="text" placeholder="Location">
-        <button onclick="updateProfile()">Save Profile</button>
-    </div>
+<!-- MAIN ENTRY POINT -->
+<script type="module" src="js/main.js"></script>
 
-    <!-- Register Page -->
-    <div id="registerPage" class="page" style="display:none;">
-        <h2>Register</h2>
-        <input id="regEmail" type="email" placeholder="Email" required>
-        <input id="regPassword" type="password" placeholder="Password" required>
-        <input id="regUsername" type="text" placeholder="Username" required>
-        <button onclick="register()">Sign Up</button>
-    </div>
-
-    <!-- Login Page -->
-    <div id="loginPage" class="page" style="display:none;">
-        <h2>Login</h2>
-        <input id="loginEmail" type="email" placeholder="Email" required>
-        <input id="loginPassword" type="password" placeholder="Password" required>
-        <button onclick="login()">Sign In</button>
-    </div>
-
-    <!-- Chat Page -->
-    <div id="chatPage" class="page" style="display:none;">
-        <h2>Chat Inbox</h2>
-        <p>Chat features coming soon!</p>
-    </div>
-
-    <!-- Video Page -->
-    <div id="videoPage" class="page" style="display:none;">
-        <h2>Video Call</h2>
-        <video id="localVideo" autoplay playsinline muted></video>
-        <video id="remoteVideo" autoplay playsinline></video>
-        <br>
-        <button id="captureButton">Capture & Save Picture</button>
-        <p>Your Peer ID: <span id="myId"></span></p>
-    </div>
-
-    <footer>© 2026 Emma - My Personal Chat & Video App | Connect with friends anytime ❤️</footer>
-
-    <script>
-        // Firebase Config
-        const firebaseConfig = {
-            apiKey: "AIzaSyBnsV3FzzYr_gxw09c-MVQK7-ixDtyb9Ew",
-            authDomain: "my-chat-app-702ff.firebaseapp.com",
-            projectId: "my-chat-app-702ff",
-            storageBucket: "my-chat-app-702ff.firebasestorage.app",
-            messagingSenderId: "435826781176",
-            appId: "1:435826781176:web:fe2442d3be3f5906cf040d",
-            measurementId: "G-RRX76FYMY7"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const storage = firebase.storage();
-
-        const peer = new Peer();
-        let localStream = null;
-
-        // Get camera stream
-        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-            .then(stream => {
-                localStream = stream;
-                const localVideo = document.getElementById('localVideo');
-                if (localVideo) localVideo.srcObject = stream;
-            })
-            .catch(err => console.error("Camera error:", err));
-
-        // PeerJS events
-        peer.on('open', id => {
-            document.getElementById('myId').textContent = id;
-            if (auth.currentUser) {
-                db.collection('users').doc(auth.currentUser.uid).update({ peerId: id });
-            }
-        });
-
-        peer.on('call', call => {
-            if (localStream) {
-                call.answer(localStream);
-                call.on('stream', remoteStream => {
-                    document.getElementById('remoteVideo').srcObject = remoteStream;
-                });
-            }
-        });
-
-        // Page switching
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-            document.getElementById(pageId).style.display = 'block';
-        }
-
-        // Auth state listener - MAIN FIX HERE
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                // Logged in
-                document.getElementById('logoutButton').style.display = 'inline-block';
-                document.getElementById('loggedInHome').style.display = 'block';
-                loadProfile();
-                loadRecommendedUsers();
-                showPage('homePage');
-            } else {
-                // Not logged in
-                document.getElementById('logoutButton').style.display = 'none';
-                document.getElementById('loggedInHome').style.display = 'none';
-                showPage('loginPage');  // Always start on login when not authenticated
-            }
-        });
-
-        // Register
-        function register() {
-            const email = document.getElementById('regEmail').value.trim();
-            const password = document.getElementById('regPassword').value;
-            const username = document.getElementById('regUsername').value.trim() || 'User';
-
-            if (!email || !password) {
-                alert('Please fill in email and password');
-                return;
-            }
-
-            auth.createUserWithEmailAndPassword(email, password)
-                .then(cred => {
-                    return db.collection('users').doc(cred.user.uid).set({
-                        username: username,
-                        bio: '',
-                        age: '',
-                        location: '',
-                        profilePic: '',
-                        peerId: ''
-                    });
-                })
-                .then(() => {
-                    alert('Registered successfully! Please log in.');
-                    showPage('loginPage');
-                })
-                .catch(err => alert('Error: ' + err.message));
-        }
-
-        // Login
-        function login() {
-            const email = document.getElementById('loginEmail').value.trim();
-            const password = document.getElementById('loginPassword').value;
-
-            if (!email || !password) {
-                alert('Please enter email and password');
-                return;
-            }
-
-            auth.signInWithEmailAndPassword(email, password)
-                .then(() => {
-                    // Success - onAuthStateChanged will handle page switch
-                })
-                .catch(err => alert('Login failed: ' + err.message));
-        }
-
-        // Logout
-        function logout() {
-            auth.signOut();
-        }
-
-        // Load profile for editing
-        function loadProfile() {
-            const user = auth.currentUser;
-            if (!user) return;
-            db.collection('users').doc(user.uid).get()
-                .then(doc => {
-                    if (doc.exists) {
-                        const data = doc.data();
-                        document.getElementById('currentProfilePic').src = data.profilePic || 'https://via.placeholder.com/100';
-                        document.getElementById('bioInput').value = data.bio || '';
-                        document.getElementById('ageInput').value = data.age || '';
-                        document.getElementById('locationInput').value = data.location || '';
-                    }
-                });
-        }
-
-        // Update profile (including photo upload)
-        function updateProfile() {
-            const user = auth.currentUser;
-            if (!user) return;
-
-            const file = document.getElementById('profilePicInput').files[0];
-            const bio = document.getElementById('bioInput').value;
-            const age = document.getElementById('ageInput').value;
-            const location = document.getElementById('locationInput').value;
-
-            const updates = { bio, age, location };
-
-            if (file) {
-                const ref = storage.ref('profiles/' + user.uid);
-                ref.put(file).then(() => {
-                    ref.getDownloadURL().then(url => {
-                        updates.profilePic = url;
-                        db.collection('users').doc(user.uid).update(updates)
-                            .then(() => {
-                                alert('Profile updated!');
-                                loadRecommendedUsers();
-                            });
-                    });
-                }).catch(err => alert('Upload error: ' + err.message));
-            } else {
-                db.collection('users').doc(user.uid).update(updates)
-                    .then(() => {
-                        alert('Profile updated!');
-                        loadRecommendedUsers();
-                    });
-            }
-        }
-
-        // Load recommended users grid
-        function loadRecommendedUsers() {
-            const grid = document.getElementById('recommendedGrid');
-            grid.innerHTML = '<p>Loading users...</p>';
-
-            db.collection('users').get()
-                .then(snapshot => {
-                    grid.innerHTML = '';
-                    if (snapshot.empty) {
-                        grid.innerHTML = '<p>No users yet.</p>';
-                        return;
-                    }
-                    snapshot.forEach(doc => {
-                        if (doc.id === auth.currentUser?.uid) return; // skip self
-
-                        const data = doc.data();
-                        const card = document.createElement('div');
-                        card.className = 'user-card';
-                        card.innerHTML = `
-                            <img src="${data.profilePic || 'https://via.placeholder.com/100'}" class="user-pic">
-                            <h3>${data.username || 'User'}</h3>
-                            <p>${data.bio || 'No bio yet'}</p>
-                            <p>Age: ${data.age || '?'} | ${data.location || 'Somewhere'}</p>
-                            <button onclick="startInstantCall('${doc.id}')">Call Now</button>
-                        `;
-                        grid.appendChild(card);
-                    });
-                })
-                .catch(err => {
-                    grid.innerHTML = '<p>Error loading users.</p>';
-                    console.error(err);
-                });
-        }
-
-        // Instant call without typing ID
-        function startInstantCall(friendUid) {
-            db.collection('users').doc(friendUid).get()
-                .then(doc => {
-                    if (!doc.exists) {
-                        alert('User not found');
-                        return;
-                    }
-                    const peerId = doc.data().peerId;
-                    if (!peerId) {
-                        alert('Friend is not online right now');
-                        return;
-                    }
-                    const call = peer.call(peerId, localStream);
-                    call.on('stream', remoteStream => {
-                        document.getElementById('remoteVideo').srcObject = remoteStream;
-                    });
-                    showPage('videoPage');
-                });
-        }
-
-        // Capture picture
-        document.getElementById('captureButton').addEventListener('click', () => {
-            const video = document.getElementById('localVideo');
-            if (!video || video.videoWidth === 0) {
-                alert('No video stream');
-                return;
-            }
-            const canvas = document.createElement('canvas');
-            canvas.width = video.videoWidth;
-            canvas.height = video.videoHeight;
-            canvas.getContext('2d').drawImage(video, 0, 0);
-            const link = document.createElement('a');
-            link.href = canvas.toDataURL('image/png');
-            link.download = 'my-photo.png';
-            link.click();
-        });
-
-        // Placeholder for future chat functions
-        function addFriend() { alert('Chat coming soon!'); }
-        function loadFriends() { /* future */ }
-    </script>
 </body>
 </html>
+
+https://console.firebase.google.com/u/0/project/emma-s-app-2740a/authentication/providers

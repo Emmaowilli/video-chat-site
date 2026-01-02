@@ -1,0 +1,217 @@
+/* =========================
+   GLOBAL
+========================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+nav {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 15px;
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+nav button {
+  background: rgba(255,255,255,0.25);
+  border: none;
+  color: white;
+  padding: 10px 22px;
+  margin: 5px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+nav button:hover {
+  background: rgba(255,255,255,0.45);
+}
+
+/* =========================
+   CONTENT
+========================= */
+#content {
+  flex: 1;
+  padding: 20px;
+}
+
+/* =========================
+   HEADERS
+========================= */
+h1 {
+  font-size: 36px;
+  text-align: center;
+  margin: 20px 0;
+  color: white;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+h2 {
+  font-size: 32px;
+  text-align: center;
+  margin: 40px 0 25px;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* =========================
+   HOME HEADER
+========================= */
+.home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  margin-bottom: 30px;
+}
+
+.emma-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #ff69b4;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+}
+
+.guest-btn {
+  background: #ff69b4;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.guest-btn:hover {
+  background: #ff4fa3;
+  transform: scale(1.05);
+}
+
+/* =========================
+   SINGLE COMMUNITY GRID
+========================= */
+.recommended-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 30px;
+  justify-items: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =========================
+   USER CARD - BIGGER & BEAUTIFUL
+========================= */
+.user-card {
+  background: white;
+  width: 100%;
+  max-width: 220px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  transition: all 0.4s ease;
+  position: relative;
+  text-align: center;
+}
+
+.user-card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+}
+
+.user-card img {
+  width: 100%;
+  height: 240px; /* Bigger images */
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.user-card:hover img {
+  transform: scale(1.1);
+}
+
+.user-card h3 {
+  padding: 15px;
+  margin: 0;
+  color: #764ba2;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+/* Online dot on image */
+.online-status {
+  position: absolute;
+  bottom: 85px;
+  right: 20px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 4px solid white;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+}
+
+.green-dot { background: #4caf50; }
+.yellow-dot { background: #ffeb3b; }
+
+/* =========================
+   FORMS & INPUTS
+========================= */
+input, textarea, select {
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+button {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+  margin: 10px 5px;
+}
+
+button:hover {
+  background: #764ba2;
+  transform: scale(1.05);
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+  background: rgba(0,0,0,0.4);
+  color: white;
+  text-align: center;
+  padding: 25px;
+  font-size: 15px;
+  backdrop-filter: blur(5px);
+}
