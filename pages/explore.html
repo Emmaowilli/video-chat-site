@@ -1,8 +1,45 @@
-<h2>Explore</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EmmaChat – Explore</title>
+  <link rel="stylesheet" href="../css/explore.css" />
+</head>
+<body>
 
-<input id="exploreInput" placeholder="Paste video URL or search anything">
-<button onclick="searchExplore()">Search</button>
+<!-- TOP NAV -->
+<header class="top-bar">
+  <div class="logo">
+    🔥 <span>EmmaChat</span>
+  </div>
 
-<div id="exploreResults"></div>
+  <nav class="nav-icons">
+    <button class="active">Discover</button>
+    <button disabled>Followings</button>
+    <button disabled>History</button>
+    <button disabled>Messages</button>
+  </nav>
+
+  <div class="auth-buttons">
+    <button class="login-btn" onclick="loadPage('pages/login.html')">Log In</button>
+    <button class="signup-btn" onclick="loadPage('pages/register.html')">Sign Up</button>
+  </div>
+</header>
+
+<!-- FILTER BAR -->
+<section class="filter-bar">
+  <button class="filter active">Online</button>
+  <button class="filter">Live</button>
+</section>
+
+<!-- GRID -->
+<section class="explore-grid" id="exploreGrid">
+  <!-- Cards injected by JS -->
+</section>
+
+<script src="../js/explore.js"></script>
+</body>
+</html>
+
 
 

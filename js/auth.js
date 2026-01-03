@@ -1,27 +1,29 @@
 import { auth, db } from "./firebase.js";
-import {
-    createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-
-import { doc, setDoc } from
-"https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 window.register = async () => {
-    const email = regEmail.value;
-    const password = regPassword.value;
-    const username = regUsername.value;
+  const email = regEmail.value;
+  const pass = regPass.value;
+  const name = regName.value;
 
-    const cred = await createUserWithEmailAndPassword(auth, email, password);
+  const res = await createUserWithEmailAndPassword(auth, email, pass);
 
-    await setDoc(doc(db, "users", cred.user.uid), {
-        username,
-        createdAt: new Date()
-    });
+  await setDoc(doc(db, "users", res.user.uid), {
+    uid: res.user.uid,
+    name,
+    email,
+    friends: [],
+    requests: []
+  });
 
-    alert("Registered!");
+  alert("Account created");
 };
 
 window.login = async () => {
-    await signInWithEmailAndPassword(auth, loginEmail.value, loginPassword.value);
+  const email = logEmail.value;
+  const pass = logPass.value;
+  await signInWithEmailAndPassword(auth, email, pass);
+  alert("Logged in");
 };
+

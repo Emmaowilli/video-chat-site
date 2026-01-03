@@ -9,6 +9,8 @@ let currentChatFriend = null;
 ========================= */
 window.loadPage = async (page) => {
   const content = document.getElementById("content");
+  if (!content) return;
+
   content.innerHTML = "Loading...";
 
   const res = await fetch(page);
@@ -39,7 +41,8 @@ function loadHome() {
     const card = document.createElement("div");
     card.className = "user-card";
     card.innerHTML = `
-      <img src="images/${1000146336 + i}.jpg" onerror="this.src='images/1738616231284.jpg'">
+      <img src="images/${1000146336 + i}.jpg"
+           onerror="this.src='images/1738616231284.jpg'">
       <h3>${name}</h3>
       <div class="card-actions">
         <button onclick="alert('Liked ${name}')">❤️</button>
@@ -51,17 +54,19 @@ function loadHome() {
 }
 
 /* =========================
-   EXPLORE (VIDEOS + SEARCH)
+   EXPLORE
 ========================= */
 function initExplore() {
   const results = document.getElementById("exploreResults");
+  const exploreInput = document.getElementById("exploreInput");
+  if (!results || !exploreInput) return;
+
   window.searchExplore = () => {
     const q = exploreInput.value.trim();
     results.innerHTML = "";
 
     if (!q) return;
 
-    // If direct video URL
     if (q.match(/\.(mp4|webm|ogg)$/)) {
       results.innerHTML = `
         <video controls autoplay width="100%">
@@ -70,7 +75,6 @@ function initExplore() {
       return;
     }
 
-    // Otherwise normal search (preview)
     results.innerHTML = `
       <div class="search-card">
         <p>🔎 Results for <b>${q}</b></p>
@@ -88,6 +92,9 @@ function initExplore() {
 function initChat() {
   const select = document.getElementById("chatFriend");
   const chatBox = document.getElementById("chatBox");
+  const messageInput = document.getElementById("messageInput");
+
+  if (!select || !chatBox || !messageInput) return;
 
   const friends = ["Emma","Grace","Sarah","Aisha"];
 
@@ -101,11 +108,17 @@ function initChat() {
 
   select.onchange = () => {
     currentChatFriend = select.value;
-    chatBox.innerHTML = `<p>Chatting with ${currentChatFriend}</p>`;
+    chatBox.innerHTML = currentChatFriend
+      ? `<p>Chatting with ${currentChatFriend}</p>`
+      : "";
   };
 
   window.sendMessage = () => {
-    if (!currentChatFriend) return alert("Select a friend");
+    if (!currentChatFriend) {
+      alert("Select a friend first");
+      return;
+    }
+
     const msg = messageInput.value.trim();
     if (!msg) return;
 
@@ -137,6 +150,11 @@ function aiReply(msg) {
    START
 ========================= */
 loadPage("pages/home.html");
+
+window.setTheme = (theme) => {
+  document.body.className = theme;
+};
+
 
 
 

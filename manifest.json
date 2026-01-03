@@ -1,0 +1,6 @@
+{
+  "name": "Emma App",
+  "short_name": "Emma",
+  "start_url": "/",
+  "display": "standalone"
+}
