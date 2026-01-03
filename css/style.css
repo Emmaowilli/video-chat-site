@@ -215,3 +215,27 @@ footer {
   font-size: 15px;
   backdrop-filter: blur(5px);
 }
+.card-actions {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.chat-box {
+  background: white;
+  color: black;
+  height: 300px;
+  padding: 10px;
+  overflow-y: auto;
+  border-radius: 12px;
+}
+
+.me { text-align: right; color: #667eea; }
+.friend { text-align: left; color: #764ba2; }
+
+.search-card {
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 15px;
+}

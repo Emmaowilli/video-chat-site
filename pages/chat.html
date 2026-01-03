@@ -1,13 +1,10 @@
 <h2>Chat</h2>
 
-<select id="chatFriend" onchange="loadChat(this.value)"></select>
+<select id="chatFriend"></select>
 
-<div id="chatBox"></div>
+<div id="chatBox" class="chat-box"></div>
 
-<input id="messageInput" placeholder="Message">
+<input id="messageInput" placeholder="Type message">
 <button onclick="sendMessage()">Send</button>
-<button onclick="sendEmoji()">😊</button>
-<button onclick="recordAudio()">🎤</button>
-<button onclick="takePhoto()">📷</button>
-<button onclick="startCallChat()">📞</button>
+
 <button onclick="startVideoCallChat()">🎥</button>
